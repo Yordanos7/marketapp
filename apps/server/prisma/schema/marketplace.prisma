@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(CUSTOMER) // CUSTOMER, SELLER, WORKER, ADMIN  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  products  Product[]    @relation("SellerProducts")
+  orders    Order[]      @relation("BuyerOrders")
+  jobs      Job[]        @relation("SellerJobs")
+  // For workers who are also users, link to Worker profile
+  worker    Worker?      @relation(fields: [workerId], references: [id])
+  workerId  String?      @unique
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  price       Float
+  seller      User      @relation("SellerProducts", fields: [sellerId], references: [id])
+  sellerId    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  orders      Order[]
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  product    Product     @relation(fields: [productId], references: [id])
+  productId  String
+  buyer      User        @relation("BuyerOrders", fields: [buyerId], references: [id])
+  buyerId    String
+  status     OrderStatus @default(PENDING)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Job {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  seller      User       @relation("SellerJobs", fields: [sellerId], references: [id])
+  sellerId    String
+  worker      Worker?    @relation(fields: [workerId], references: [id])
+  workerId    String?
+  status      JobStatus  @default(OPEN)  // OPEN, ASSIGNED, COMPLETED, CANCELED
+  deadline    DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Worker {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String    @unique
+  skills      String[]
+  available   Boolean   @default(true)
+  rating      Float     @default(0)
+  jobs        Job[]
+}
+
+model Proposal {
+  id          String   @id @default(cuid())
+  job         Job      @relation(fields: [jobId], references: [id])
+  jobId       String
+  worker      Worker   @relation(fields: [workerId], references: [id])
+  workerId    String
+  message     String   // Proposal details or cover letter
+  proposedRate Float?  // optional proposed price or rate for the job
+  status      ProposalStatus @default(PENDING) // PENDING, ACCEPTED, REJECTED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum Role {
+  CUSTOMER
+  SELLER
+  WORKER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELED
+}
+
+enum JobStatus {
+  OPEN
+  ASSIGNED
+  COMPLETED
+  CANCELED
+}
