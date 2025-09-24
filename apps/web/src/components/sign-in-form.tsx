@@ -7,6 +7,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useRouter } from "next/navigation";
+import { createAuthClient } from "better-auth/react";
+import Providers from "./providers";
 
 export default function SignInForm({
 	onSwitchToSignUp,
@@ -49,6 +51,17 @@ export default function SignInForm({
 	if (isPending) {
 		return <Loader />;
 	}
+
+	// here i code for sign in with gogle function 
+
+	
+
+	const signIn= async()=>{
+		 const data = await authClient.signIn.social({
+			 provider:'google'
+		 })
+	}
+
 
 	return (
 		<div className="mx-auto w-full mt-10 max-w-md p-6">
@@ -120,6 +133,11 @@ export default function SignInForm({
 					)}
 				</form.Subscribe>
 			</form>
+                 <div>
+					<button onClick={signIn} className="w-full mt-4 p-2 border rounded bg-red-500 text-white hover:bg-red-600">
+						Sign in with Google
+					</button>
+				 </div>
 
 			<div className="mt-4 text-center">
 				<Button
