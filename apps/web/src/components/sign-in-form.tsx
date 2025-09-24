@@ -62,8 +62,8 @@ export default function SignInForm({
 	};
 
 	return (
-		<div className="mx-auto w-full max-w-md p-8 mt-10 bg-white border border-gray-200 rounded-xl shadow-lg">
-			<h1 className="mb-6 text-center text-2xl font-extrabold text-gray-800">
+		<div className="mx-auto w-full max-w-md p-8 mt-10 dark:bg-gray-800 border dark:border-gray-700 rounded-xl shadow-lg">
+			<h1 className="mb-6 text-center text-2xl  dark:text-white font-extrabold ">
 				Welcome Back
 			</h1>
 
@@ -79,7 +79,7 @@ export default function SignInForm({
 				<form.Field name="email">
 					{(field) => (
 						<div className="space-y-2">
-							<Label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+							<Label htmlFor={field.name} className="text-sm font-medium dark:text-gray-300">
 								Email Address
 							</Label>
 							<Input
@@ -107,7 +107,7 @@ export default function SignInForm({
 				<form.Field name="password">
 					{(field) => (
 						<div className="space-y-2">
-							<Label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+							<Label htmlFor={field.name} className="text-sm font-medium dark:text-gray-300">
 								Password
 							</Label>
 							<Input
@@ -147,7 +147,7 @@ export default function SignInForm({
 				{/* Divider */}
 				<div className="relative flex items-center my-6">
 					<div className="flex-grow border-t border-gray-300"></div>
-					<span className="px-4 text-sm text-gray-500">or continue with</span>
+					<span className="px-4 text-sm dark:text-gray-300">or continue with</span>
 					<div className="flex-grow border-t border-gray-300"></div>
 				</div>
 
@@ -156,7 +156,7 @@ export default function SignInForm({
 					type="button"
 					onClick={signInWithGoogle}
 					variant="outline"
-					className="w-full py-3 flex items-center justify-center gap-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors"
+					className="w-full py-3 flex items-center justify-center gap-3 border border-gray-300 dark:text-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors"
 				>
 					<GoogleIcon className="w-5 h-5" />
 					<span>Sign in with Google</span>
@@ -165,7 +165,7 @@ export default function SignInForm({
 
 			{/* Sign Up Link */}
 			<div className="mt-6 text-center">
-				<p className="text-sm text-gray-600">
+				<p className="text-sm dark:text-gray-300">
 					Don’t have an account?{" "}
 					<button
 						type="button"

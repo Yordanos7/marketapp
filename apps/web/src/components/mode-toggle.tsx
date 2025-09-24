@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
+import * as React from "react"; // this is for importing all thing from  react library
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "next-themes"; // this is for importing the useTheme hook from next-themes library
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,

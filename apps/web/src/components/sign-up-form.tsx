@@ -54,8 +54,8 @@ export default function SignUpForm({
 	}
 
 	return (
-		<div className="mx-auto w-full mt-10 max-w-md p-6">
-			<h1 className="mb-6 text-center text-3xl font-bold">Create Account</h1>
+		<div className="mx-auto w-full max-w-md p-8 mt-10 dark:bg-white border-gray-200 rounded-xl shadow-lg">
+			<h1 className="mb-6 text-center text-3xl font-extrabold dark:text-green-500">Create Account</h1>
 
 			<form
 				onSubmit={(e) => {
@@ -65,17 +65,18 @@ export default function SignUpForm({
 				}}
 				className="space-y-4"
 			>
-				<div>
-					<form.Field name="name">
+				<div >
+					<form.Field name="name" >
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Name</Label>
+								<Label htmlFor={field.name} className="dark:text-green-500">Name</Label>
 								<Input
 									id={field.name}
 									name={field.name}
 									value={field.state.value}
 									onBlur={field.handleBlur}
 									onChange={(e) => field.handleChange(e.target.value)}
+									className="dark:text-green-800 font-bold"
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
@@ -86,12 +87,12 @@ export default function SignUpForm({
 						)}
 					</form.Field>
 				</div>
-
+            {/* email field added here */}
 				<div>
 					<form.Field name="email">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Email</Label>
+								<Label htmlFor={field.name} className="dark:text-green-400 font-bold">Email</Label>
 								<Input
 									id={field.name}
 									name={field.name}
@@ -99,6 +100,7 @@ export default function SignUpForm({
 									value={field.state.value}
 									onBlur={field.handleBlur}
 									onChange={(e) => field.handleChange(e.target.value)}
+									className="dark:text-green-800 font-bold"
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
@@ -109,19 +111,20 @@ export default function SignUpForm({
 						)}
 					</form.Field>
 				</div>
-
+                                  {/* and this is for password field */}
 				<div>
 					<form.Field name="password">
 						{(field) => (
 							<div className="space-y-2">
-								<Label htmlFor={field.name}>Password</Label>
-								<Input
+								<Label htmlFor={field.name} className="dark:text-green-400 font-bold">Password</Label>
+								<Input 
 									id={field.name}
 									name={field.name}
 									type="password"
 									value={field.state.value}
 									onBlur={field.handleBlur}
 									onChange={(e) => field.handleChange(e.target.value)}
+									className="dark:text-green-800 font-bold"
 								/>
 								{field.state.meta.errors.map((error) => (
 									<p key={error?.message} className="text-red-500">
