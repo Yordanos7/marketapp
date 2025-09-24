@@ -22,7 +22,13 @@
     "db:stop": "turbo -F server db:stop",
     "db:down": "turbo -F server db:down"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.2",
+    "@mui/material": "^7.3.2",
+    "lucide-react": "^0.544.0"
+  },
   "devDependencies": {
     "turbo": "^2.5.4"
   },

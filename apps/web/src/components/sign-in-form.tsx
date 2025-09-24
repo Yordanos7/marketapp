@@ -7,8 +7,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useRouter } from "next/navigation";
-import { createAuthClient } from "better-auth/react";
-import Providers from "./providers";
+import GoogleIcon from "@mui/icons-material/Google";
 
 export default function SignInForm({
 	onSwitchToSignUp,
@@ -42,7 +41,7 @@ export default function SignInForm({
 		},
 		validators: {
 			onSubmit: z.object({
-				email: z.email("Invalid email address"),
+				email: z.string().email("Invalid email address"),
 				password: z.string().min(8, "Password must be at least 8 characters"),
 			}),
 		},
@@ -52,20 +51,21 @@ export default function SignInForm({
 		return <Loader />;
 	}
 
-	// here i code for sign in with gogle function 
-
-	
-
-	const signIn= async()=>{
-		 const data = await authClient.signIn.social({
-			 provider:'google'
-		 })
-	}
-
+	const signInWithGoogle = async () => {
+		try {
+			await authClient.signIn.social({
+				provider: "google",
+			});
+		} catch (error) {
+			toast.error("Google sign-in failed. Please try again.");
+		}
+	};
 
 	return (
-		<div className="mx-auto w-full mt-10 max-w-md p-6">
-			<h1 className="mb-6 text-center text-3xl font-bold">Welcome Back</h1>
+		<div className="mx-auto w-full max-w-md p-8 mt-10 bg-white border border-gray-200 rounded-xl shadow-lg">
+			<h1 className="mb-6 text-center text-2xl font-extrabold text-gray-800">
+				Welcome Back
+			</h1>
 
 			<form
 				onSubmit={(e) => {
@@ -73,80 +73,108 @@ export default function SignInForm({
 					e.stopPropagation();
 					form.handleSubmit();
 				}}
-				className="space-y-4"
+				className="space-y-5"
 			>
-				<div>
-					<form.Field name="email">
-						{(field) => (
-							<div className="space-y-2">
-								<Label htmlFor={field.name}>Email</Label>
-								<Input
-									id={field.name}
-									name={field.name}
-									type="email"
-									value={field.state.value}
-									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange(e.target.value)}
-								/>
-								{field.state.meta.errors.map((error) => (
-									<p key={error?.message} className="text-red-500">
-										{error?.message}
-									</p>
-								))}
-							</div>
-						)}
-					</form.Field>
-				</div>
+				{/* Email Field */}
+				<form.Field name="email">
+					{(field) => (
+						<div className="space-y-2">
+							<Label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+								Email Address
+							</Label>
+							<Input
+								id={field.name}
+								name={field.name}
+								type="email"
+								placeholder="you@example.com"
+								value={field.state.value}
+								onBlur={field.handleBlur}
+								onChange={(e) => field.handleChange(e.target.value)}
+								className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							/>
+							{field.state.meta.errors?.length > 0 && (
+								<div className="text-sm text-red-500">
+									{field.state.meta.errors.map((err, i) => (
+										<div key={i}>{err?.message}</div>
+									))}
+								</div>
+							)}
+						</div>
+					)}
+				</form.Field>
 
-				<div>
-					<form.Field name="password">
-						{(field) => (
-							<div className="space-y-2">
-								<Label htmlFor={field.name}>Password</Label>
-								<Input
-									id={field.name}
-									name={field.name}
-									type="password"
-									value={field.state.value}
-									onBlur={field.handleBlur}
-									onChange={(e) => field.handleChange(e.target.value)}
-								/>
-								{field.state.meta.errors.map((error) => (
-									<p key={error?.message} className="text-red-500">
-										{error?.message}
-									</p>
-								))}
-							</div>
-						)}
-					</form.Field>
-				</div>
+				{/* Password Field */}
+				<form.Field name="password">
+					{(field) => (
+						<div className="space-y-2">
+							<Label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+								Password
+							</Label>
+							<Input
+								id={field.name}
+								name={field.name}
+								type="password"
+								placeholder="••••••••"
+								value={field.state.value}
+								onBlur={field.handleBlur}
+								onChange={(e) => field.handleChange(e.target.value)}
+								className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+							/>
+							{field.state.meta.errors?.length > 0 && (
+								<div className="text-sm text-red-500">
+									{field.state.meta.errors.map((err, i) => (
+										<div key={i}>{err?.message}</div>
+									))}
+								</div>
+							)}
+						</div>
+					)}
+				</form.Field>
 
+				{/* Submit Button */}
 				<form.Subscribe>
 					{(state) => (
 						<Button
 							type="submit"
-							className="w-full"
 							disabled={!state.canSubmit || state.isSubmitting}
+							className="w-full py-3 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors"
 						>
-							{state.isSubmitting ? "Submitting..." : "Sign In"}
+							{state.isSubmitting ? "Signing In..." : "Sign In"}
 						</Button>
 					)}
 				</form.Subscribe>
-			</form>
-                 <div>
-					<button onClick={signIn} className="w-full mt-4 p-2 border rounded bg-red-500 text-white hover:bg-red-600">
-						Sign in with Google
-					</button>
-				 </div>
 
-			<div className="mt-4 text-center">
+				{/* Divider */}
+				<div className="relative flex items-center my-6">
+					<div className="flex-grow border-t border-gray-300"></div>
+					<span className="px-4 text-sm text-gray-500">or continue with</span>
+					<div className="flex-grow border-t border-gray-300"></div>
+				</div>
+
+				{/* Google Sign In */}
 				<Button
-					variant="link"
-					onClick={onSwitchToSignUp}
-					className="text-indigo-600 hover:text-indigo-800"
+					type="button"
+					onClick={signInWithGoogle}
+					variant="outline"
+					className="w-full py-3 flex items-center justify-center gap-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors"
 				>
-					Need an account? Sign Up
+					<GoogleIcon className="w-5 h-5" />
+					<span>Sign in with Google</span>
 				</Button>
+			</form>
+
+			{/* Sign Up Link */}
+			<div className="mt-6 text-center">
+				<p className="text-sm text-gray-600">
+					Don’t have an account?{" "}
+					<button
+						type="button"
+						onClick={onSwitchToSignUp}
+						className="font-medium text-indigo-600 hover:text-indigo-800 focus:outline-none"
+					>
+						Sign Up
+					</button>
+				</p>
 			</div>
 		</div>
 	);
