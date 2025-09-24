@@ -1,6 +1,7 @@
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
 import { todoRouter } from "./todo";
 import { marketplaceRouter } from "./marketplace";
+import { fidaRouter } from "./fida";
 
 export const appRouter = router({
 	healthCheck: publicProcedure.query(() => {
@@ -14,6 +15,7 @@ export const appRouter = router({
 	}),
 	todo: todoRouter,
 	marketplace: marketplaceRouter,
+	fida:fidaRouter, // i just add this line for fida router
 });
 export type AppRouter = typeof appRouter;
 
