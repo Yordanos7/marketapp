@@ -33,10 +33,12 @@ const Partners = () => {
   const partnersToRender = [...partners, ...partners];
 
   return (
-    <div className="p-8 rounded-lg shadow-md">
-      <h1 className="text-yellow-500 font-bold text-2xl">HuluGebeya</h1>
+    <div className="p-8 rounded-lg shadow-md flex flex-col items-center justify-center dark:bg-black h-auto ">
+      <h1 className="text-yellow-500 font-bold text-7xl -mt-6 text-shadow-2xs">
+        HuluGebeya
+      </h1>
       <main className="mt-4">
-        <div className="text-lg text-gray-800">
+        <div className="text-lg text-yellow-500 dark:text-white flex items-center justify-center ">
           Some of The partners that Work with HuluGebeya
         </div>
 

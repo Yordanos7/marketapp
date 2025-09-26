@@ -4,8 +4,8 @@ import { trpc } from "@/utils/trpc";
 import Partenr from "@/components/partenr";
 export default function Home() {
   return (
-    <div className="flex-1 items-center">
-      <section className="h-auto relative min-h-screen bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center overflow-hidden flex-row ">
+    <div className="flex-1 items-center ">
+      <section className="dark:bg-black h-auto relative min-h-screen bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center overflow-hidden flex-row ">
         <div className="container mx-auto px-6 py-24 md:px-12 lg:px-24 relative z-10">
           <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
             {/* Left Content Area */}
@@ -146,7 +146,7 @@ export default function Home() {
           </div>
         </div>
         {/* Wave SVG at the bottom */}
-        <div className="absolute bottom-0 left-0 w-full z-0">
+        <div className="absolute -bottom-1.5 left-0 w-full z-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1440 320"
